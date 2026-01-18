@@ -1,4 +1,4 @@
-package spring.boot.nextbuy.securities;
+package spring.boot.nextbuy.configurations;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -36,12 +36,13 @@ public class JWTUtils {
         if (cookie != null) {
             return cookie.getValue();
         }
+        System.out.print(cookie);
         return null;
     }
 
     public ResponseCookie generateJwtCookie(User user) {
         String jwt = generateToken(user);
-        ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt).path("/auth").maxAge(2 * 60 * 60).httpOnly(true).build();
+        ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt).path("/").maxAge(2 * 60 * 60).httpOnly(true).build();
         return cookie;
     }
 

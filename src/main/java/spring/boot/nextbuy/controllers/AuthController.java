@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import spring.boot.nextbuy.entities.User;
 import spring.boot.nextbuy.entities.dto.SinginRequest;
 import spring.boot.nextbuy.entities.dto.SingupRequest;
-import spring.boot.nextbuy.securities.JWTUtils;
+import spring.boot.nextbuy.configurations.JWTUtils;
 import spring.boot.nextbuy.services.UserService;
 
 @RestController
