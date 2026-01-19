@@ -11,25 +11,31 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import spring.boot.nextbuy.configurations.FileStorageProperties;
+import spring.boot.nextbuy.entities.Product;
+import spring.boot.nextbuy.entities.dto.ProductRequest;
+import spring.boot.nextbuy.services.ProductService;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("api/files")
 public class FileController {
 
     private final Path fileLocation;
+    private ProductService productService;
 
-    public FileController(FileStorageProperties fileStorageProperties) {
+    public FileController(FileStorageProperties fileStorageProperties, ProductService productService) {
         this.fileLocation = Paths.get(fileStorageProperties.getUploadDir()).toAbsolutePath().normalize();
+        this.productService = productService;
     }
 
-    @PostMapping("/save/product")
-    public ResponseEntity<String> uploadFile(@RequestParam("file")MultipartFile file) {
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+    @PostMapping("/upload")
+    public ResponseEntity<?> uploadFile(@RequestParam("file")MultipartFile file) {
+        String fileName = StringUtils.cleanPath(LocalDateTime.now().toString() + "_" + file.getOriginalFilename());
 
         try {
             Path targetLocation = fileLocation.resolve(fileName);
