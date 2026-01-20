@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import spring.boot.nextbuy.entities.Product;
 import spring.boot.nextbuy.entities.dto.ProductRequest;
+import spring.boot.nextbuy.entities.dto.ProductResponse;
 import spring.boot.nextbuy.services.ProductService;
 import spring.boot.nextbuy.entities.dto.ProductQuerys;
 
@@ -31,7 +32,7 @@ public class ProductController {
     }
 
     @GetMapping
-    public Page<Product> searchProduct(ProductQuerys query, Pageable pageable) {
+    public Page<ProductResponse> searchProduct(ProductQuerys query, Pageable pageable) {
         return productService.searchProducts(query, pageable);
     }
 }
