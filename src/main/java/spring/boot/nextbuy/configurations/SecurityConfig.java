@@ -38,6 +38,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/auth/singin").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/singup").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/files/download/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/product").permitAll()
                         .anyRequest().authenticated());
 
         httpSecurity.authenticationProvider(authenticationProvider());

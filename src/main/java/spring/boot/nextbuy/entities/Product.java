@@ -3,6 +3,8 @@ package spring.boot.nextbuy.entities;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "tb_product")
 public class Product {
@@ -15,11 +17,12 @@ public class Product {
     private String description;
     private String category;
     private String brand;
-    @Nullable
     private String imgPath;
 
     private double price;
     private int quantity;
+
+    public Product() {}
 
     public Product(String name, String description, String category, String brand, double price, int quantity, String imgPath) {
         this.name = name;
@@ -89,5 +92,17 @@ public class Product {
 
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(id, product.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }

@@ -36,7 +36,6 @@ public class JWTUtils {
         if (cookie != null) {
             return cookie.getValue();
         }
-        System.out.print(cookie);
         return null;
     }
 

@@ -25,5 +25,4 @@ public class UserService {
     public Boolean emailVerification(String email) { return  userRepository.existsByEmail(email); }
 
     public Boolean usernameVerification(String username) { return  userRepository.existsByUsername(username); }
-
 }
