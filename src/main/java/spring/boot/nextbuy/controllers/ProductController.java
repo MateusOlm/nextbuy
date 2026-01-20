@@ -1,13 +1,13 @@
 package spring.boot.nextbuy.controllers;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import spring.boot.nextbuy.entities.Product;
 import spring.boot.nextbuy.entities.dto.ProductRequest;
 import spring.boot.nextbuy.services.ProductService;
-import spring.boot.nextbuy.services.specifications.ProductQuerys;
-
-import java.util.List;
+import spring.boot.nextbuy.entities.dto.ProductQuerys;
 
 @RestController
 @RequestMapping("/product")
@@ -31,7 +31,7 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<Product> searchProduct(ProductQuerys querys) {
-        return productService.findAll(querys);
+    public Page<Product> searchProduct(ProductQuerys query, Pageable pageable) {
+        return productService.searchProducts(query, pageable);
     }
 }

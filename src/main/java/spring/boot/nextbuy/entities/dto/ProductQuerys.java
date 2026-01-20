@@ -1,7 +1,8 @@
-package spring.boot.nextbuy.services.specifications;
+package spring.boot.nextbuy.entities.dto;
 
 import org.springframework.data.jpa.domain.Specification;
 import spring.boot.nextbuy.entities.Product;
+import spring.boot.nextbuy.services.specifications.ProductSpec;
 
 import java.util.Objects;
 
