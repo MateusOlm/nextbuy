@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import spring.boot.nextbuy.entities.Product;
 import spring.boot.nextbuy.entities.dto.ProductRequest;
 import spring.boot.nextbuy.entities.dto.ProductResponse;
+import spring.boot.nextbuy.entities.mapper.ProductMapper;
 import spring.boot.nextbuy.services.ProductService;
 import spring.boot.nextbuy.entities.dto.ProductQuerys;
 
@@ -25,9 +26,7 @@ public class ProductController {
 
     @PostMapping("/save")
     public ResponseEntity<?> registerProduct(@RequestBody ProductRequest productRequest) {
-        Product product = new Product(productRequest.name(), productRequest.description()
-                , productRequest.category(), productRequest.brand(), productRequest.price()
-                , productRequest.quantity(), productRequest.imgPath());
+        Product product = ProductMapper.DtoToProduct(productRequest);
 
         productService.insert(product);
 
@@ -36,19 +35,11 @@ public class ProductController {
 
     @GetMapping
     public Page<ProductResponse> searchProduct(ProductQuerys query, Pageable pageable) {
-        return productService.searchProducts(query, pageable).map(product -> {
-            return new ProductResponse(product.getName(), product.getDescription(),
-                    product.getCategory(), product.getBrand(), product.getImgPath(), product.getPrice(),
-                    product.getQuantity());
-        });
+        return productService.searchProducts(query, pageable).map(ProductMapper::ProductToDto);
     }
 
     @GetMapping("/brand")
-    public List<ProductResponse> serchForEachCategory() {
-        return productService.searchForEachCategory().stream().map(product -> {
-            return new ProductResponse(product.getName(), product.getDescription(),
-                    product.getCategory(), product.getBrand(), product.getImgPath(), product.getPrice(),
-                    product.getQuantity());
-        }).toList();
+    public List<ProductResponse> searchForEachCategory() {
+        return productService.searchForEachCategory().stream().map(ProductMapper::ProductToDto).toList();
     }
 }
