@@ -10,6 +10,9 @@ import spring.boot.nextbuy.entities.dto.ProductResponse;
 import spring.boot.nextbuy.services.ProductService;
 import spring.boot.nextbuy.entities.dto.ProductQuerys;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/product")
 public class ProductController {
@@ -33,6 +36,19 @@ public class ProductController {
 
     @GetMapping
     public Page<ProductResponse> searchProduct(ProductQuerys query, Pageable pageable) {
-        return productService.searchProducts(query, pageable);
+        return productService.searchProducts(query, pageable).map(product -> {
+            return new ProductResponse(product.getName(), product.getDescription(),
+                    product.getCategory(), product.getBrand(), product.getImgPath(), product.getPrice(),
+                    product.getQuantity());
+        });
+    }
+
+    @GetMapping("/brand")
+    public List<ProductResponse> serchForEachCategory() {
+        return productService.searchForEachCategory().stream().map(product -> {
+            return new ProductResponse(product.getName(), product.getDescription(),
+                    product.getCategory(), product.getBrand(), product.getImgPath(), product.getPrice(),
+                    product.getQuantity());
+        }).toList();
     }
 }

@@ -21,12 +21,11 @@ public class ProductService {
 
     public Product insert(Product product) { return productRepository.save(product); }
 
-    public Page<ProductResponse> searchProducts(ProductQuerys querys, Pageable pageable) {
-        Page<Product> page = productRepository.findAll(querys.toSpecification(), pageable);
-        return page.map(product -> {
-            return new ProductResponse(product.getName(), product.getDescription(),
-                    product.getCategory(), product.getBrand(), product.getImgPath(), product.getPrice(),
-                    product.getQuantity());
-        });
+    public Page<Product> searchProducts(ProductQuerys querys, Pageable pageable) {
+        return productRepository.findAll(querys.toSpecification(), pageable);
+    }
+
+    public List<Product> searchForEachCategory() {
+        return productRepository.searchForEachCategory();
     }
 }
