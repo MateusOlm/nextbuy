@@ -3,7 +3,6 @@ package spring.boot.nextbuy.controllers;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -11,8 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import spring.boot.nextbuy.configurations.FileStorageProperties;
-import spring.boot.nextbuy.entities.Product;
-import spring.boot.nextbuy.entities.dto.ProductRequest;
 import spring.boot.nextbuy.services.ProductService;
 
 import java.io.IOException;

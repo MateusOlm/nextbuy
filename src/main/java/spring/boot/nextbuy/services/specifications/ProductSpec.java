@@ -26,4 +26,11 @@ public class ProductSpec {
             return criteriaBuilder.like(root.get("category"), "%" + category + "%");
         };
     }
+
+    public static Specification<Product> equalName(String name) {
+        return (root, query, criteriaBuilder) -> {
+            if (ObjectUtils.isEmpty(name)) { return null ;}
+            return criteriaBuilder.equal(root.get("name"), name);
+        };
+    }
 }

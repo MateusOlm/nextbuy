@@ -7,7 +7,7 @@ import spring.boot.nextbuy.entities.dto.ProductResponse;
 public class ProductMapper {
 
     public static Product DtoToProduct(ProductRequest productRequest) {
-        return new Product(productRequest.name(), productRequest.description()
+        return new Product(productRequest.name().trim().toLowerCase().replace(" ", "-"), productRequest.description()
                 , productRequest.category(), productRequest.brand(), productRequest.price()
                 , productRequest.quantity(), productRequest.imgPath());
     }

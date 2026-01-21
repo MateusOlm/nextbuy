@@ -3,6 +3,7 @@ package spring.boot.nextbuy.controllers;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import spring.boot.nextbuy.entities.Product;
 import spring.boot.nextbuy.entities.dto.ProductRequest;
@@ -12,7 +13,7 @@ import spring.boot.nextbuy.services.ProductService;
 import spring.boot.nextbuy.entities.dto.ProductQuerys;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/product")
@@ -41,5 +42,14 @@ public class ProductController {
     @GetMapping("/brand")
     public List<ProductResponse> searchForEachCategory() {
         return productService.searchForEachCategory().stream().map(ProductMapper::ProductToDto).toList();
+    }
+
+    @GetMapping("/name")
+    public ResponseEntity<Optional<ProductResponse>> equalName(ProductQuerys query) {
+        Optional<ProductResponse> product = productService.equalName(query).map(ProductMapper::ProductToDto);
+        if (ObjectUtils.isEmpty(product)) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(product);
     }
 }

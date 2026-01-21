@@ -60,4 +60,8 @@ public class ProductQuerys {
     public Specification<Product> toSpecification() {
         return ProductSpec.nameContains(this.name).and(brandContains(brand)).and(categoryContains(category));
     }
+
+    public Specification<Product> equalName() {
+        return ProductSpec.equalName(this.name);
+    }
 }
