@@ -50,7 +50,7 @@ public class JWTUtils {
         return cookie;
     }
 
-    public String getIdFromJwtToken(String token) {
+    public String getEmailFromJwtToken(String token) {
         return Jwts.parserBuilder().setSigningKey(key()).build().parseClaimsJws(token).getBody().getSubject();
     }
 

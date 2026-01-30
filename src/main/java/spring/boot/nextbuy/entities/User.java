@@ -1,5 +1,6 @@
 package spring.boot.nextbuy.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.UniqueElements;
@@ -24,6 +25,8 @@ public class User implements UserDetails {
     private String password;
     @NotNull
     private String email;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private ShopCart shopCart;
 
     public User() {}
 

@@ -14,8 +14,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import spring.boot.nextbuy.configurations.securities.AuthSecurity;
 import spring.boot.nextbuy.services.AuthService;
+
+import java.util.List;
 
 
 @Configuration
@@ -33,13 +38,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) {
         httpSecurity.csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/auth/singin").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/singup").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/files/download/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/product").permitAll()
-                        .anyRequest().authenticated());
+                        .requestMatchers(HttpMethod.POST, "/product/save").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/auth/me").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/shopcart").authenticated()
+                        .anyRequest().permitAll());
 
         httpSecurity.authenticationProvider(authenticationProvider());
 
@@ -54,6 +59,21 @@ public class SecurityConfig {
         authenticationProvider.setPasswordEncoder(passwordEncoder());
 
         return authenticationProvider;
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+
+        config.setAllowedOrigins(List.of("http://localhost:5173"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+
+        return source;
     }
 
     @Bean

@@ -1,9 +1,12 @@
 package spring.boot.nextbuy.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_product")
@@ -21,6 +24,10 @@ public class Product {
 
     private double price;
     private int quantity;
+
+    @OneToMany(mappedBy = "id.product")
+    @JsonIgnore
+    private Set<CartItems> cartItems = new HashSet<>();
 
     public Product() {}
 
@@ -92,6 +99,15 @@ public class Product {
 
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
+    }
+
+    @JsonIgnore
+    public Set<ShopCart> getShopCart() {
+        Set<ShopCart> set = new HashSet<>();
+        for(CartItems x: cartItems) {
+            set.add(x.getShopCart());
+        }
+        return set;
     }
 
     @Override

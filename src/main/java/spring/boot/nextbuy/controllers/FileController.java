@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 
 @RestController
@@ -31,9 +33,9 @@ public class FileController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<?> uploadFile(@RequestParam("file")MultipartFile file) {
-        String fileName = StringUtils.cleanPath(LocalDateTime.now().toString() + "_" + file.getOriginalFilename());
-
+    public ResponseEntity<?> uploadFile(@RequestParam("file")MultipartFile file) throws ParseException {
+        SimpleDateFormat fst = new SimpleDateFormat("MMddyyyy_HHmmss");
+        String fileName = StringUtils.cleanPath(fst.parse(LocalDateTime.now().toString())+ "_" + file.getOriginalFilename());
         try {
             Path targetLocation = fileLocation.resolve(fileName);
             file.transferTo(targetLocation);

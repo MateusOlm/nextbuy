@@ -31,7 +31,7 @@ public class AuthSecurity extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = parseToken(request);
         if ( token != null && jwtUtils.validateToken(token) ) {
-            String userEmail = jwtUtils.getIdFromJwtToken(token);
+            String userEmail = jwtUtils.getEmailFromJwtToken(token);
             UserDetails user = authService.loadUserByUsername(userEmail);
 
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
