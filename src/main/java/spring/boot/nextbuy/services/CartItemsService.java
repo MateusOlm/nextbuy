@@ -27,6 +27,14 @@ public class CartItemsService {
             cartItemsRepository.save(prod);
         }
         });
+    }
 
+    public void delete(User user, CartItemsRequest cartItemsRequest) {
+        Set<CartItems> items = user.getShopCart().getCartItems();
+        items.forEach(prod -> {
+            if(prod.getProduct().getName().equals(cartItemsRequest.name())) {
+                cartItemsRepository.delete(prod);
+            }
+        });
     }
 }

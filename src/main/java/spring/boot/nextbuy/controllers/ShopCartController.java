@@ -60,4 +60,11 @@ public class ShopCartController {
         cartItemsService.update(user, cartItemsRequest);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    @DeleteMapping
+    public ResponseEntity<HttpStatus> deleteCartItems(@RequestBody CartItemsRequest cartItemsRequest, HttpServletRequest request) {
+        User user = userService.findByEmail(jwtUtils.getEmailFromJwtToken(jwtUtils.getJwtFromCookie(request)));
+        cartItemsService.delete(user, cartItemsRequest);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }
