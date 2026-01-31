@@ -39,18 +39,25 @@ public class ShopCartController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addProductToCart(@RequestBody CartItemsRequest cartItemsRequest, HttpServletRequest request) {
+    public ResponseEntity<HttpStatus> addProductToCart(@RequestBody CartItemsRequest cartItemsRequest, HttpServletRequest request) {
         User user = userService.findByEmail(jwtUtils.getEmailFromJwtToken(jwtUtils.getJwtFromCookie(request)));
         Optional<Product> prod = productService.equalName(ProductQuerys.equalName(cartItemsRequest.name()));
         if (prod.isEmpty()) { return ResponseEntity.badRequest().build(); }
         CartItems item = new CartItems(user.getShopCart(), prod.get(), cartItemsRequest.quantity());
         cartItemsService.insert(item);
-        return ResponseEntity.ok(HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping
     public ResponseEntity<Set<CartItems>> getCartItems(HttpServletRequest request) {
         User user = userService.findByEmail(jwtUtils.getEmailFromJwtToken(jwtUtils.getJwtFromCookie(request)));
         return ResponseEntity.ok().body(user.getShopCart().getCartItems());
+    }
+
+    @PutMapping
+    public ResponseEntity<HttpStatus> updateCartItems(@RequestBody CartItemsRequest cartItemsRequest, HttpServletRequest request) {
+        User user = userService.findByEmail(jwtUtils.getEmailFromJwtToken(jwtUtils.getJwtFromCookie(request)));
+        cartItemsService.update(user, cartItemsRequest);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
