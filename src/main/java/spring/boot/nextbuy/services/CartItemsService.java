@@ -17,24 +17,29 @@ public class CartItemsService {
         this.cartItemsRepository = cartItemsRepository;
     }
 
-    public CartItems insert(CartItems cartItems) { return cartItemsRepository.save(cartItems); }
-
-    public void update(User user, CartItemsRequest cartItemsRequest) {
-        Set<CartItems> items = user.getShopCart().getCartItems();
-        items.forEach(prod -> {
-            if(prod.getProduct().getName().equals(cartItemsRequest.name())) {
-            prod.setCartQuantity(cartItemsRequest.quantity());
-            cartItemsRepository.save(prod);
-        }
-        });
+    public void insert(CartItems cartItems) {
+        cartItemsRepository.save(cartItems);
     }
 
-    public void delete(User user, CartItemsRequest cartItemsRequest) {
-        Set<CartItems> items = user.getShopCart().getCartItems();
-        items.forEach(prod -> {
-            if(prod.getProduct().getName().equals(cartItemsRequest.name())) {
-                cartItemsRepository.delete(prod);
+    public boolean update(User user, CartItemsRequest cartItemsRequest) {
+        for (CartItems prod: user.getShopCart().getCartItems()) {
+            if (prod.getProduct().getName().equals(cartItemsRequest.name())) {
+                prod.setCartQuantity(cartItemsRequest.quantity());
+                cartItemsRepository.save(prod);
+                return true;
             }
-        });
+        }
+        return false;
+    }
+
+    public boolean delete(User user, CartItemsRequest cartItemsRequest) {
+        for (CartItems prod: user.getShopCart().getCartItems()) {
+            if (prod.getProduct().getName().equals(cartItemsRequest.name())) {
+                prod.setCartQuantity(cartItemsRequest.quantity());
+                cartItemsRepository.delete(prod);
+                return true;
+            }
+        }
+        return false;
     }
 }

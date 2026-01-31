@@ -57,14 +57,16 @@ public class ShopCartController {
     @PutMapping
     public ResponseEntity<HttpStatus> updateCartItems(@RequestBody CartItemsRequest cartItemsRequest, HttpServletRequest request) {
         User user = userService.findByEmail(jwtUtils.getEmailFromJwtToken(jwtUtils.getJwtFromCookie(request)));
-        cartItemsService.update(user, cartItemsRequest);
+        boolean update = cartItemsService.update(user, cartItemsRequest);
+        if (!update) { return ResponseEntity.status(HttpStatus.BAD_REQUEST).build(); }
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @DeleteMapping
     public ResponseEntity<HttpStatus> deleteCartItems(@RequestBody CartItemsRequest cartItemsRequest, HttpServletRequest request) {
         User user = userService.findByEmail(jwtUtils.getEmailFromJwtToken(jwtUtils.getJwtFromCookie(request)));
-        cartItemsService.delete(user, cartItemsRequest);
+        boolean delete = cartItemsService.delete(user, cartItemsRequest);
+        if (!delete) { return ResponseEntity.status(HttpStatus.BAD_REQUEST).build(); }
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
