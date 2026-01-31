@@ -44,6 +44,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/product/save").authenticated()
                         .requestMatchers(HttpMethod.GET, "/auth/me").authenticated()
                         .requestMatchers(HttpMethod.POST, "/shopcart").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/shopcart").authenticated()
                         .anyRequest().permitAll());
 
         httpSecurity.authenticationProvider(authenticationProvider());

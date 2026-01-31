@@ -89,6 +89,10 @@ public class User implements UserDetails {
         this.email = email;
     }
 
+    public ShopCart getShopCart() {
+        return shopCart;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

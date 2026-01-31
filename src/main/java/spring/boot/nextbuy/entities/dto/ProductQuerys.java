@@ -15,6 +15,8 @@ public class ProductQuerys {
     private String category;
     private String brand;
 
+    public ProductQuerys() {}
+
     public ProductQuerys(String name, String category, String brand) {
         this.name = name;
         this.category = category;
@@ -63,5 +65,9 @@ public class ProductQuerys {
 
     public Specification<Product> equalName() {
         return ProductSpec.equalName(this.name);
+    }
+
+    public static Specification<Product> equalName(String name) {
+        return ProductSpec.equalName(name);
     }
 }

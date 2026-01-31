@@ -1,5 +1,6 @@
 package spring.boot.nextbuy.services;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import spring.boot.nextbuy.entities.User;
 import spring.boot.nextbuy.repositories.UserRepository;
@@ -19,7 +20,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public List<User> findAll() { return userRepository.findAll(); }
+    public User findByEmail(String email) { return (User) userRepository.findByEmail(email); }
 
     public Boolean emailVerification(String email) { return  userRepository.existsByEmail(email); }
 

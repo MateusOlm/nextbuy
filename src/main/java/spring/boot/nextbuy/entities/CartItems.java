@@ -7,6 +7,7 @@ import jakarta.persistence.Table;
 import spring.boot.nextbuy.entities.pk.CartItemsPk;
 
 import java.util.Objects;
+import java.util.Optional;
 
 @Entity
 @Table(name = "tb_cart_items")
@@ -23,6 +24,7 @@ public class CartItems {
         id.setProduct(product);
         this.cartQuantity = cartQuantity;
     }
+
 
     @JsonIgnore
     public ShopCart getShopCart() {

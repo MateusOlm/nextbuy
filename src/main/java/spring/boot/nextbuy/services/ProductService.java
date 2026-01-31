@@ -2,6 +2,7 @@ package spring.boot.nextbuy.services;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import spring.boot.nextbuy.entities.Product;
 import spring.boot.nextbuy.repositories.ProductRepository;
@@ -27,6 +28,10 @@ public class ProductService {
 
     public Optional<Product> equalName(ProductQuerys querys) {
         return productRepository.findOne(querys.equalName());
+    }
+
+    public Optional<Product> equalName(Specification<Product> query) {
+        return productRepository.findOne(query);
     }
 
     public List<Product> searchForEachCategory() {

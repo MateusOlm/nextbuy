@@ -15,6 +15,7 @@ public class ShopCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @JsonIgnore
     @OneToOne
     @MapsId
@@ -36,6 +37,14 @@ public class ShopCart {
 
     public void setFk_idUser(User user) {
         this.user = user;
+    }
+
+    public Set<CartItems> getCartItems() {
+        return cartItems;
+    }
+
+    public void addItems(CartItems item) {
+        this.cartItems.add(item);
     }
 
     @Override
