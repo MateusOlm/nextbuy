@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import spring.boot.nextbuy.entities.Product;
+import spring.boot.nextbuy.entities.dto.CategoyResponse;
 import spring.boot.nextbuy.repositories.ProductRepository;
 import spring.boot.nextbuy.entities.dto.ProductQuerys;
 
@@ -36,5 +37,13 @@ public class ProductService {
 
     public List<Product> searchForEachCategory() {
         return productRepository.searchForEachCategory();
+    }
+
+    public List<CategoyResponse> onceProductForCategoryAndQuantity() {
+        return productRepository.onceProductForCategoryAndQuantity();
+    }
+
+    public List<Product> featuredProducts() {
+        return productRepository.featuredProducts();
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import spring.boot.nextbuy.entities.Product;
+import spring.boot.nextbuy.entities.dto.CategoyResponse;
 import spring.boot.nextbuy.entities.dto.ProductRequest;
 import spring.boot.nextbuy.entities.dto.ProductResponse;
 import spring.boot.nextbuy.entities.mapper.ProductMapper;
@@ -42,6 +43,16 @@ public class ProductController {
     @GetMapping("/brand")
     public List<ProductResponse> searchForEachCategory() {
         return productService.searchForEachCategory().stream().map(ProductMapper::ProductToDto).toList();
+    }
+
+    @GetMapping("/category")
+    public List<CategoyResponse> onceProductForCategoryAndQuantity() {
+        return productService.onceProductForCategoryAndQuantity();
+    }
+
+    @GetMapping("/featured")
+    public List<ProductResponse> featuredProducts() {
+        return productService.featuredProducts().stream().map(ProductMapper::ProductToDto).toList();
     }
 
     @GetMapping("/name")
